@@ -22,13 +22,15 @@ readLine.on 'line', (line) ->
   redirect++ if line.match(three_hundred) != null
   if line.match(four_hundred) != null
     failure++
-    fail_uri = line.match(/"(.*?)"/)
-    failure_code = line.match(four_hundred)
+    fail_uri = line.match(/"(.*?)"/)[0]
+    failure_code = line.match(four_hundred)[0].slice(0, -2)
+    console.log fail_uri
 
 readLine.on 'end', ->
-  console.log "Largest resource size in bytes: #{res_sizes.max()}"
-  console.log "Average resource size in bytes: #{res_sizes.mean()}"
-  console.log "Smallest resource size in bytes: #{res_sizes.min()}"
   console.log "Success Codes: #{success}"
   console.log "Redirect Codes: #{redirect}"
   console.log "Failure Codes: #{failure}"
+  console.log "Largest resource size in bytes: #{res_sizes.max()}"
+  console.log "Average resource size in bytes: #{res_sizes.mean()}"
+  console.log "Smallest resource size in bytes: #{res_sizes.min()}"
+  console.log "Failure URI: #{fail_uri} - #{failure_code.trim()}"
