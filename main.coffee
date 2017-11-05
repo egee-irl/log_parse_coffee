@@ -1,7 +1,7 @@
 ReadLine = require('linebyline')
 Stats = require("stats-array")
 
-ip_match = '/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b'
+ip_match = /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/
 two_hundred = /\s2\d\d\s\d/
 three_hundred = /\s3\d\d\s\d/
 four_hundred = /\s4\d\d\s\d/
@@ -17,6 +17,7 @@ ip_addresses = []
 res_sizes = []
 
 readLine.on 'line', (line) ->
+  ip_addresses.push(line.match(ip_match)[0]) if line.match(ip_match) != null
   res_sizes.push(line.match(/\b(\d*)\b\s"/)[0].slice(0, -2))
   success++ if line.match(two_hundred) != null
   redirect++ if line.match(three_hundred) != null
@@ -27,6 +28,7 @@ readLine.on 'line', (line) ->
     console.log fail_uri
 
 readLine.on 'end', ->
+  console.log "Total IPs: #{ip_addresses.length}"
   console.log "Success Codes: #{success}"
   console.log "Redirect Codes: #{redirect}"
   console.log "Failure Codes: #{failure}"
