@@ -1,4 +1,5 @@
 ReadLine = require('linebyline')
+Stats = require("stats-array")
 
 ip_match = '/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b'
 two_hundred = /\s2\d\d\s\d/
@@ -24,10 +25,9 @@ readLine.on 'line', (line) ->
     fail_uri = line.match(/"(.*?)"/)
     failure_code = line.match(four_hundred)
 
-readLine.on 'end', ->
-  max = res_sizes.reduce (a, b) ->
-    Math.max(a, b)
-  console.log max
+  console.log "Largest resource size in bytes: #{res_sizes.max()}"
+  console.log "Average resource size in bytes: #{res_sizes.mean()}"
+  console.log "Smallest resource size in bytes: #{res_sizes.min()}"
   console.log "Success Codes: #{success}"
   console.log "Redirect Codes: #{redirect}"
   console.log "Failure Codes: #{failure}"
