@@ -16,9 +16,11 @@ ip_addresses = []
 res_sizes = []
 
 readLine.on 'line', (line) ->
+  res_sizes.push(line.match(/\b(\d*)\b\s"/))
   success++ if line.match(two_hundred) != null
   redirect++ if line.match(three_hundred) != null
   if line.match(four_hundred) != null
     failure++
     fail_uri = line.match(/"(.*?)"/)
-  console.log(fail_uri)
+    failure_code = line.match(four_hundred)
+  console.log(res_sizes)
