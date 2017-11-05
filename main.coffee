@@ -25,6 +25,7 @@ readLine.on 'line', (line) ->
     fail_uri = line.match(/"(.*?)"/)
     failure_code = line.match(four_hundred)
 
+readLine.on 'end', ->
   console.log "Largest resource size in bytes: #{res_sizes.max()}"
   console.log "Average resource size in bytes: #{res_sizes.mean()}"
   console.log "Smallest resource size in bytes: #{res_sizes.min()}"
